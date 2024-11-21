@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+  
     'users',
+    "graphene_django",
 ]
+
+AUTH_USER_MODEL = "users.CustomUser"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,13 +78,67 @@ WSGI_APPLICATION = 'climate_change_bn.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # Use the PostgreSQL engine
+#         'NAME': 'postgres',                        # Database name
+#         'USER': 'postgres.dryrcugkvysmyxozbeet',   # Supabase username
+#         'PASSWORD': 'Yawhey@123!',                # Supabase password
+#         'HOST': 'aws-0-us-east-1.pooler.supabase.com',  # Supabase host
+#         'PORT': '6543',                            # Supabase port
+#     }
+# }
+
+
+# import environ
+
+# env = environ.Env()
+# environ.Env.read_env()  
+
+# print("DB_NAME:", env('DB_NAME'))  
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': env('DB_NAME'),
+#         'USER': env('DB_USER'),
+#         'PASSWORD': env('DB_PASSWORD'),
+#         'HOST': env('DB_HOST'),
+#         'PORT': env('DB_PORT'),
+#     }
+# }
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+print("Database Name:", os.getenv('DATABASE_NAME'))
+print("Database User:", os.getenv('DATABASE_USER'))
+print("Database Host:", os.getenv('DATABASE_HOST'))
+print("Database Port:", os.getenv('DATABASE_PORT'))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'),
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 
+
+
+GRAPHENE = {
+    "SCHEMA": "users.schemas.schema"
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -123,3 +180,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# pass: Yawhey@123!
